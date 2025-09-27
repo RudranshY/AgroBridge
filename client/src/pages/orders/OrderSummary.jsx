@@ -14,14 +14,14 @@ const OrderSummary = ({ totalAmount, deliveryCharge, limitForFreeDelivery }) => 
             Rs.{totalAmount}.00
           </p>
         </div>
-         <div className="flex justify-between items-center w-full">
+         {/*<div className="flex justify-between items-center w-full">
         <p className="text-base  leading-4 text-gray-800">
           Discount{" "}
         </p>
         <p className="text-base  leading-4 text-gray-600">
           Rs.25.00 (5%)
         </p>
-      </div> 
+      </div> */}
         <div className="flex justify-between items-center w-full">
           <p className="text-base  leading-4 text-gray-800">Shipping</p>
           {totalAmount >= limitForFreeDelivery ? (
