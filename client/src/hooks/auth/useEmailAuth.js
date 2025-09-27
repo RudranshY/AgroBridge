@@ -15,6 +15,18 @@ const useEmailAuth = () => {
     }
   };
 
+  const handleLogin = async (type, formData) => {
+    try {
+      await sendRequest(LOGIN(type), "POST", formData);
+      if (type === "seller") {
+        navigate("/sellerdashboard");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const verifyAccount = async (type, token) => {
     try {
