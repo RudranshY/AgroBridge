@@ -47,7 +47,7 @@ const CustomerLocationSelector = ({
               </div>
             </div>
           </div>
-          <div className="flex w-full my-2 justify-center items-center md:justify-start md:items-start">
+         {/* <div className="flex w-full my-2 justify-center items-center md:justify-start md:items-start">
             <button
               className="mt-6 md:mt-0  py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base leading-4 text-gray-800"
               onClick={() => {
@@ -61,7 +61,7 @@ const CustomerLocationSelector = ({
             >
               Submit Location
             </button>
-          </div>
+          </div>*/}
         </div>
       </div>
     </div>
