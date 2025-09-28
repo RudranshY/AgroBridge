@@ -5,7 +5,7 @@ import { notifyType } from "../../utils/helper/notificationType";
 import { useCookies } from "react-cookie";
 
 axios.defaults.baseURL = import.meta.env.VITE_AGROBRIDGE_API;
-
+axios.defaults.withCredentials = true; // <<< send & accept cookies by default
 
 const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
