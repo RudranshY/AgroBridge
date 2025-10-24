@@ -1,7 +1,0 @@
-{
-  "name": "agrobridge-root",
-  "private": true,
-  "scripts": {
-    "build": "cd client && (npm ci || npm install) && npm run build"
-  }
-}
