@@ -20,24 +20,33 @@ const signup = async (req, res) => {
 
     let result = await data.save();
 
-    const isMailSentSuccessful = await saveAndSendVerficationToken(
-      result._id.toString(),
-      type,
-      req.get("Origin")
-    );
-    if (isMailSentSuccessful) {
-      return res.status(200).send({
-        message: `${capitalizeFirstLetter(
-          type
-        )} account created, please verify your email to login`,
-      });
-    } else {
-      return res.status(200).send({
-        message: `${capitalizeFirstLetter(
-          type
-        )} account created. However, we couldn't send the verification link. You can verify your account during login.`,
-      });
-    }
+    // Email verification is disabled for Vercel. Manual verification with Compass is required.
+    // const isMailSentSuccessful = await saveAndSendVerficationToken(
+    //   result._id.toString(),
+    //   type,
+    //   req.get("Origin")
+    // );
+    // if (isMailSentSuccessful) {
+    //   return res.status(200).send({
+    //     message: `${capitalizeFirstLetter(
+    //       type
+    //     )} account created, please verify your email to login`,
+    //   });
+    // } else {
+    //   return res.status(200).send({
+    //     message: `${capitalizeFirstLetter(
+    //       type
+    //     )} account created. However, we couldn't send the verification link. You can verify your account during login.`,
+    //   });
+    // }
+
+    // New response for manual verification workflow
+    return res.status(200).send({
+      message: `${capitalizeFirstLetter(
+        type
+      )} account created. Please await manual verification from an administrator.`,
+    });
+    
   } catch (error) {
     if (error.code === 11000) {
       if (error.keyPattern.email || error.keyPattern.contact) {
@@ -81,27 +90,39 @@ const login = async (req, res) => {
     if (!isPasswordMatched) {
       return res.status(401).send({ message: "Incorrect password" });
     } else {
+      
+      // This check is required for the manual verification workflow
       if (!data.isVerified) {
-        const isMailSentSuccessful = await saveAndSendVerficationToken(
-          data._id.toString(),
-          type,
-          req.get("Origin")
-        );
-        if (!isMailSentSuccessful) {
-          return res.status(200).send({
+        
+        // Email verification is disabled for Vercel.
+        // const isMailSentSuccessful = await saveAndSendVerficationToken(
+        //   data._id.toString(),
+        //   type,
+        //   req.get("Origin")
+        // );
+        // if (!isMailSentSuccessful) {
+        //   return res.status(200).send({
+        //     message: `${capitalizeFirstLetter(
+        //       type
+        //     )} account not verified. We couldn't send the email. Please try again later. If this issue persists, contact the developer.`,
+        //   });
+        // } else {
+        //   return res.status(200).send({
+        //     message: `${capitalizeFirstLetter(
+        //       type
+        //     )} account not verified. We've sent you an email, please verify your email to login`,
+        //   });
+        // }
+
+        // Return the "not verified" error.
+        return res.status(200).send({
             message: `${capitalizeFirstLetter(
-              type
-            )} account not verified. We couldn't send the email. Please try again later. If this issue persists, contact the developer.`,
-          });
-        } else {
-          return res.status(200).send({
-            message: `${capitalizeFirstLetter(
-              type
-            )} account not verified. We've sent you an email, please verify your email to login`,
-          });
-        }
+            type
+            )} account not verified. Please contact support.`,
+        });
       }
 
+      // This code will now only run if the user is verified
       return res.status(200).send({
         message: `${capitalizeFirstLetter(type)} login successful`,
         cookies: {
@@ -135,7 +156,7 @@ const verifyToken = async (req, res) => {
     );
 
     if (data?.isVerified)
-      return res.status(409).send({ message: "Account already verified" });
+      return res.status(4.09).send({ message: "Account already verified" });
 
     if (!data) {
       return res.status(404).send({ message: "Invalid token" });

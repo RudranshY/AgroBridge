@@ -86,4 +86,13 @@ app.use((err, req, res, next) => {
   console.error("Unhandled server error:", err);
   res.status(500).json({ message: "Internal server error" });
 });
+
+if (process.env.NODE_ENV !== "production") {
+  server.listen(PORT, () => {
+    console.log(`Server is running on PORT: ${PORT}`);
+    console.log("Allowed origins:", allowedOrigins);
+  });
+}
+
+
 module.exports = server;
