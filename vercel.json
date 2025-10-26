@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "installCommand": "cd server && npm install && cd .. && cd client && npm install",
+  "installCommand": "cd client && npm install",
   "builds": [
     {
       "src": "server/index.js",
       "use": "@vercel/node"
     },
     {
-      "src": "client",
+      "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "client/dist"
       }
     }
   ],
