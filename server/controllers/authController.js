@@ -156,7 +156,7 @@ const verifyToken = async (req, res) => {
     );
 
     if (data?.isVerified)
-      return res.status(4.09).send({ message: "Account already verified" });
+      return res.status(409).send({ message: "Account already verified" }); // Changed 4.09 to 409
 
     if (!data) {
       return res.status(404).send({ message: "Invalid token" });
